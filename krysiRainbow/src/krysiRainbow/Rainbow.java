@@ -107,7 +107,7 @@ public class Rainbow {
     private void determineChainEndHashes() {
         for (Map.Entry<String, String> curr : rainbow.entrySet()) {
             String temp = curr.getKey();
-            for (int i = 0; i < CHAINLENGTH + 1; i++) {
+            for (int i = 0; i <= CHAINLENGTH; i++) {
                 temp = H(temp);
                 temp = R(temp, i);
             }
