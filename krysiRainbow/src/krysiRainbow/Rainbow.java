@@ -177,9 +177,10 @@ public class Rainbow {
     }
 
     /**
-     * @param hash
-     * @param currentLevel
-     * @return
+     * iterates through reductions in order to find a matching string in a chain
+     * @param hash hash value to reduce and hash
+     * @param currentLevel level where to start from
+     * @return the resulting string after current level to chain length iterations
      */
     private String iterateReduction(String hash, int currentLevel) {
         while (currentLevel < CHAINLENGTH) {
@@ -192,8 +193,9 @@ public class Rainbow {
     }
 
     /**
-     * @param k
-     * @return if a value is present, the value
+     * checks if the rainbow contains a value
+     * @param k String to find in value column
+     * @return if a value is present, the value, else empty
      */
     private Optional<ArrayList<String>> rainbowContainsValue(String k) {
 
@@ -201,6 +203,7 @@ public class Rainbow {
         for (Map.Entry<String, String> entr : rainbow.entrySet()) {
             if (entr.getValue().toLowerCase().equals(k.toLowerCase())) {
                 hits.add(entr.getKey());
+                System.out.println("A value has been found.");
             }
         }
         if (hits.size() > 0) return Optional.of(hits);
