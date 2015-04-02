@@ -203,7 +203,7 @@ public class Rainbow {
 
     /**
      * checks if the rainbow contains a value
-     * has to be an own implementation using .equals because HashMap.containsvalue would use identity matching
+     * has to be an own implementation using .equals because HashMap.containsValue() would use identity matching
      *
      * @param k String to find in value column
      * @return if a value is present, the value, else empty
