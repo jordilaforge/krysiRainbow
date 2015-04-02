@@ -11,7 +11,7 @@ import static org.junit.Assert.assertTrue;
 
 public class RainbowTest {
 
-    Rainbow r = new Rainbow();
+    private final Rainbow r = new Rainbow();
 
     @Test
     public void TestR() {

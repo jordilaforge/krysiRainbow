@@ -15,11 +15,9 @@ public class Rainbow {
     private static final char[] alphabet = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
             'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n',
             'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
-
+    public final HashMap<String, String> rainbow;
     private final int CHAINLENGTH = 2000;
     private final int WORDLENGTH = 7;
-
-    public HashMap<String, String> rainbow;
 
     /**
      * constructor for class rainbow
@@ -35,24 +33,23 @@ public class Rainbow {
      * @return hashed String
      */
     public String H(String r) {
-        MessageDigest md = null;
+        MessageDigest md;
         byte[] bytes = null;
         try {
             md = MessageDigest.getInstance("MD5");
             bytes = md.digest(r.getBytes("UTF-8"));
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (UnsupportedEncodingException e) {
+        } catch (UnsupportedEncodingException | NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
 
-        StringBuffer hexString = new StringBuffer();
-        for (int i = 0; i < bytes.length; i++) {
-            String hex = Integer.toHexString(0xff & bytes[i]);
-            if (hex.length() == 1) hexString.append('0');
-            hexString.append(hex);
+        StringBuilder hexString = new StringBuilder();
+        if (bytes != null) {
+            for (byte aByte : bytes) {
+                String hex = Integer.toHexString(0xff & aByte);
+                if (hex.length() == 1) hexString.append('0');
+                hexString.append(hex);
+            }
         }
-
         return hexString.toString();
     }
 
@@ -61,7 +58,7 @@ public class Rainbow {
      *
      * @param h     String for reduction
      * @param level level of reduction
-     * @return
+     * @return reduced string
      */
     public String R(String h, int level) {
         BigInteger H = new BigInteger(h, 16);
@@ -76,25 +73,6 @@ public class Rainbow {
         return r.reverse().toString();
     }
 
-    /**
-     * test method only for testing purpose
-     */
-    public void VogtTest() {
-        String h1 = H("0000000");
-        System.out.println(h1);
-        String r1 = R(h1, 0);
-        System.out.println(r1);
-        String h2 = H(r1);
-        System.out.println(h2);
-        String r2 = R(h2, 1);
-        System.out.println(r2);
-        String h3 = H(r2);
-        System.out.println(h3);
-        String r3 = R(h3, 2);
-        System.out.println(r3);
-        String h4 = H(r3);
-        System.out.println(h4);
-    }
 
     /**
      * populates rainbowtable witch possible Strings and their hashes
@@ -119,8 +97,8 @@ public class Rainbow {
      * adds possible passwords strings to hashmap
      *
      * @param maxLength max wordlength
-     * @param alphabet
-     * @param curr
+     * @param alphabet  alphabet to generate possible strings from
+     * @param curr      current string, used for recursion
      */
     private void possibleStrings(int maxLength, char[] alphabet, String curr) {
         if (rainbow.size() >= CHAINLENGTH) return;
@@ -130,9 +108,9 @@ public class Rainbow {
 
             // Else add each letter from the alphabet to new strings and process these new strings again
         } else {
-            for (int i = 0; i < alphabet.length; i++) {
+            for (char anAlphabet : alphabet) {
                 String oldCurr = curr;
-                curr += alphabet[i];
+                curr += anAlphabet;
                 possibleStrings(maxLength, alphabet, curr);
                 curr = oldCurr;
             }
@@ -142,7 +120,7 @@ public class Rainbow {
     /**
      * return number of elements in rainbow table
      *
-     * @return
+     * @return number of element pairs in table
      */
     public int count() {
         return rainbow.size();
