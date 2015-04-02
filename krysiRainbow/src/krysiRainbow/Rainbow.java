@@ -20,10 +20,18 @@ public class Rainbow {
     
     public HashMap<String,String> rainbow;
     
+    /**
+     * constructor for class rainbow
+     */
     public Rainbow(){
     	rainbow = new HashMap<String,String>();
     }
     
+    /**
+     * MD5 hash function
+     * @param r String to hash
+     * @return hashed String
+     */
     public String H(String r) {
         MessageDigest md = null;
         byte[] bytes = null;
@@ -46,9 +54,15 @@ public class Rainbow {
         return hexString.toString();
     }
     
-    public String R(String h, int Stufe) {
+    /**
+     * reduction function
+     * @param h String for reduction
+     * @param level level of reduction
+     * @return
+     */
+    public String R(String h, int level) {
         BigInteger H = new BigInteger(h, 16);
-        H=H.add(BigInteger.valueOf(Stufe));
+        H=H.add(BigInteger.valueOf(level));
         StringBuilder r = new StringBuilder();
 
         for (int i = 1; i <= WORDLENGTH; i++) {
@@ -59,6 +73,9 @@ public class Rainbow {
         return r.reverse().toString();
     }
 
+    /**
+     * test method only for testin purpose
+     */
 	public void VogtTest() {
 		String h1 = H("0000000");
 		System.out.println(h1);
@@ -76,6 +93,9 @@ public class Rainbow {
 		System.out.println(h4);
 	}
 	
+	/**
+	 * populates rainbowtable witch possible Strings and their hashes
+	 */
 	public void populateRainbow(){
 		possibleStrings(WORDLENGTH,alphabet,"");
 		hashValues();
@@ -92,6 +112,12 @@ public class Rainbow {
         }
 	}
 	
+	/**
+	 * adds possible strings to hashmap
+	 * @param maxLength max wordlength
+	 * @param alphabet 
+	 * @param curr
+	 */
     private void possibleStrings(int maxLength, char[] alphabet, String curr) {
     	if (rainbow.size() >= CHAINLENGTH) return;
         // If the current string has reached it's maximum length
@@ -109,11 +135,17 @@ public class Rainbow {
         }
     }
 
+    /**
+     * counts elements in rainbow table
+     */
 	public void count() {
 		System.out.println(rainbow.size()+" keys generated!");
 		
 	}
 	
+	/**
+	 * prints rainbow table
+	 */
 	public void printRainbow(){
 		for (Entry<String, String> entry : rainbow.entrySet()) {
 		    System.out.println(entry.getKey() + " | " + entry.getValue());
