@@ -7,6 +7,6 @@ Ermitteln Sie damit den Klartext zu dem in Hexadezimal-Schreibweise angegebenen 
 
 Hinweise:
 ------------
-0. Sie können in Gruppen von bis zu drei Personen arbeiten.
-0. Schreiben Sie ein kommentiertes Java-Programm.
-0. Bei Zusendung des Programms mit der L¨ osung bis nächste Woche vor dem Unterricht erhalten Sie 0.2 Bonuspunkte auf den n¨ achsten Test.
+* Sie können in Gruppen von bis zu drei Personen arbeiten.
+* Schreiben Sie ein kommentiertes Java-Programm.
+* Bei Zusendung des Programms mit der L¨ osung bis nächste Woche vor dem Unterricht erhalten Sie 0.2 Bonuspunkte auf den n¨ achsten Test.
