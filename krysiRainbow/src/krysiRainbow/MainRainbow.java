@@ -6,7 +6,6 @@ public class MainRainbow {
 		Rainbow a = new Rainbow();
 		a.populateRainbow();
 		a.printRainbow();
-		a.count();
 	}
 
 }

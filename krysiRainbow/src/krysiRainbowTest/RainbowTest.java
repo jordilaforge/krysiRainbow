@@ -33,5 +33,17 @@ public class RainbowTest {
 		String h4 = r.H(r3);
 		assertEquals(h4, "c0e9a2f2ae2b9300b6f7ef3e63807e84");
 	}
+	
+	@Test
+	public void TestRainbowTable(){
+		r.populateRainbow();
+		assertEquals(2000,r.count());
+		//random pick 1
+		assertEquals(r.rainbow.get("00000c8"),"uvgi9y8");
+		//random pick 2
+		assertEquals(r.rainbow.get("0000087"),"0sa4fhz");
+		//random pick 3
+		assertEquals(r.rainbow.get("000009x"),"04itxd6");
+	}
 
 }

@@ -136,11 +136,11 @@ public class Rainbow {
     }
 
     /**
-     * counts elements in rainbow table
+     * return number of elements in rainbow table
+     * @return
      */
-	public void count() {
-		System.out.println(rainbow.size()+" keys generated!");
-		
+	public int count() {
+		return rainbow.size();
 	}
 	
 	/**
@@ -150,6 +150,7 @@ public class Rainbow {
 		for (Entry<String, String> entry : rainbow.entrySet()) {
 		    System.out.println(entry.getKey() + " | " + entry.getValue());
 		}
+		System.out.println(count()+ " elements are in rainbow table");
 	}
 }
 
