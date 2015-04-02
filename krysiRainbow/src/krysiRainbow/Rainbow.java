@@ -14,9 +14,9 @@ public class Rainbow {
             'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n',
             'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
 
-    private static final String HASH = "1d56a37fb6b08aa709fe90e12ca59e12";
-    private static final int CHAINLENGTH = 2000;
-    private static final int WORDLENGTH = 7;
+    private final String HASH = "1d56a37fb6b08aa709fe90e12ca59e12";
+    private final int CHAINLENGTH = 2000;
+    private final int WORDLENGTH = 7;
     
     public HashMap<String,String> rainbow;
     
@@ -74,7 +74,7 @@ public class Rainbow {
     }
 
     /**
-     * test method only for testin purpose
+     * test method only for testing purpose
      */
 	public void VogtTest() {
 		String h1 = H("0000000");
