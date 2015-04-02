@@ -1,9 +1,9 @@
 package krysiRainbowTest;
 
-import static org.junit.Assert.*;
 import krysiRainbow.Rainbow;
-
 import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 public class RainbowTest {
 	
@@ -39,6 +39,7 @@ public class RainbowTest {
 		r.populateRainbow();
 		assertEquals(2000,r.count());
 		//random pick 1
+		//CURRENTLY FAILES DUE TO CHAINLENGTH/2 HAS BEEN REPLACED BY CHAINLENGTH
 		assertEquals(r.rainbow.get("00000c8"),"uvgi9y8");
 		//random pick 2
 		assertEquals(r.rainbow.get("0000087"),"0sa4fhz");

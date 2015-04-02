@@ -4,8 +4,11 @@ import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Optional;
 
 public class Rainbow {
 
@@ -104,7 +107,7 @@ public class Rainbow {
     private void determineChainEndHashes() {
         for (Map.Entry<String, String> curr : rainbow.entrySet()) {
             String temp = curr.getKey();
-            for (int i = 0; i < CHAINLENGTH; i++) {
+            for (int i = 0; i < CHAINLENGTH + 1; i++) {
                 temp = H(temp);
                 temp = R(temp, i);
             }
@@ -157,28 +160,34 @@ public class Rainbow {
 
     /**
      * search the rainbow table for a given hash, trying reduction function from chainlength to 0
+     * solution is collision proof returning all possibles chain starters
      *
      * @param inHash hash, which should be found in table
      * @return list of possible rainbow chain begins
      */
-    public ArrayList<String> searchFor(String inHash) {
-        ArrayList<String> possibleResults = new ArrayList<>();
-
-        for (int i = CHAINLENGTH; i >= 0; i--) {
-            //System.out.println("Checking level " + i);
+    public Optional<ArrayList<String>> searchFor(String inHash) {
+        ArrayList<ArrayList<String>> possibleResults = new ArrayList<>();
+        ArrayList<String> resultList = new ArrayList<>();
+        for (int i = CHAINLENGTH + 1; i >= 0; i--) {
             String s = iterateReduction(inHash, i);
-            if (rainbowContainsValue(s).isPresent()) {
-                System.out.println("A key has been found.");
+            Optional<ArrayList<String>> oResults = rainbowContainsValue(s);
+            if (oResults.isPresent()) {
+                possibleResults.add(oResults.get());
             }
         }
-
-        System.out.println("Search has ended with " + possibleResults.size() + " results.");
-        return possibleResults;
+        for (ArrayList<String> curr : possibleResults) {
+            for (String s : curr) {
+                resultList.add(s);
+            }
+        }
+        //System.out.println("Search has ended with " + possibleResults.size() + " results.");
+        return resultList.size() > 0 ? Optional.of(resultList) : Optional.empty();
     }
 
     /**
-     * iterates through reductions in order to find a matching string in a chain
-     * @param hash hash value to reduce and hash
+     * iterates through reductions in order to find a matching string in a chain, starting from the given reduction level
+     *
+     * @param hash         hash value to reduce and hash
      * @param currentLevel level where to start from
      * @return the resulting string after current level to chain length iterations
      */
@@ -194,16 +203,17 @@ public class Rainbow {
 
     /**
      * checks if the rainbow contains a value
+     * has to be an own implementation using .equals because HashMap.containsvalue would use identity matching
+     *
      * @param k String to find in value column
      * @return if a value is present, the value, else empty
      */
     private Optional<ArrayList<String>> rainbowContainsValue(String k) {
-
         ArrayList<String> hits = new ArrayList<>();
         for (Map.Entry<String, String> entr : rainbow.entrySet()) {
             if (entr.getValue().toLowerCase().equals(k.toLowerCase())) {
                 hits.add(entr.getKey());
-                System.out.println("A value has been found.");
+                //System.out.println("A chain starter has been found (reduced value: "+ entr.getValue()+"), matching key is [" + entr.getKey() + "].");
             }
         }
         if (hits.size() > 0) return Optional.of(hits);
