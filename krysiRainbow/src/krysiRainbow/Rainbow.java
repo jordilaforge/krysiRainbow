@@ -6,6 +6,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 public class Rainbow {
 
@@ -17,6 +18,11 @@ public class Rainbow {
     private static final int CHAINLENGTH = 2000;
     private static final int WORDLENGTH = 7;
     
+    public HashMap<String,String> rainbow;
+    
+    public Rainbow(){
+    	rainbow = new HashMap<String,String>();
+    }
     
     public String H(String r) {
         MessageDigest md = null;
@@ -69,4 +75,49 @@ public class Rainbow {
 		String h4 = H(r3);
 		System.out.println(h4);
 	}
+	
+	public void populateRainbow(){
+		possibleStrings(WORDLENGTH,alphabet,"");
+		hashValues();
+	}
+	
+	private void hashValues(){
+        for (Map.Entry<String, String> curr : rainbow.entrySet()) {
+            String temp = curr.getKey();
+            for (int i = 0; i < CHAINLENGTH/2; i++) {
+                temp = H(temp);
+                temp = R(temp, i);
+            }
+            rainbow.put(curr.getKey(), temp);
+        }
+	}
+	
+    private void possibleStrings(int maxLength, char[] alphabet, String curr) {
+    	if (rainbow.size() >= CHAINLENGTH) return;
+        // If the current string has reached it's maximum length
+        if(curr.length() == maxLength) {
+            rainbow.put(curr,"");
+
+        // Else add each letter from the alphabet to new strings and process these new strings again
+        } else {
+            for(int i = 0; i < alphabet.length; i++) {
+                String oldCurr = curr;
+                curr += alphabet[i];
+                possibleStrings(maxLength,alphabet,curr);
+                curr = oldCurr;
+            }
+        }
+    }
+
+	public void count() {
+		System.out.println(rainbow.size()+" keys generated!");
+		
+	}
+	
+	public void printRainbow(){
+		for (Entry<String, String> entry : rainbow.entrySet()) {
+		    System.out.println(entry.getKey() + " | " + entry.getValue());
+		}
+	}
 }
+
