@@ -155,11 +155,27 @@ public class Rainbow {
         }
         for (ArrayList<String> curr : possibleResults) {
             for (String s : curr) {
+                s = searchPredecessor(s, inHash);
                 resultList.add(s);
             }
         }
         //System.out.println("Search has ended with " + possibleResults.size() + " results.");
         return resultList.size() > 0 ? Optional.of(resultList) : Optional.empty();
+    }
+
+    public String searchPredecessor(String chainStart, String targetHash) {
+        String runner = chainStart;
+        String delay = chainStart;
+        int i = 0;
+        while (i <= CHAINLENGTH + 1) {
+            delay = runner;
+            runner = H(runner);
+            if (runner.toLowerCase().equals(targetHash.toLowerCase())) {
+                break;
+            }
+            runner = R(runner, i++);
+        }
+        return delay;
     }
 
     /**

@@ -54,7 +54,7 @@ public class RainbowTest {
     public void TestValidHash() {
         r.populateRainbow();
         String th = "1d56a37fb6b08aa709fe90e12ca59e12";
-        String tr = "00000rs";
+        String tr = "0bgec3d";
         boolean contains = false;
 
         Optional<ArrayList<String>> res = r.searchFor(th);
