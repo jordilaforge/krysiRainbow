@@ -163,6 +163,13 @@ public class Rainbow {
         return resultList.size() > 0 ? Optional.of(resultList) : Optional.empty();
     }
 
+    /**
+     * searches a hashes predecessing reduced value in the table
+     *
+     * @param chainStart starter of the matching chain
+     * @param targetHash target hash, whose predecessor should be found
+     * @return reduced value before the hashing again
+     */
     public String searchPredecessor(String chainStart, String targetHash) {
         String runner = chainStart;
         String delay = chainStart;
